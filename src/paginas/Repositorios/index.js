@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import estilos from './estilos';
 import { pegarRepositoriosUsuario } from '../../services/requisicoes/repositorios'; 
+import { PegarRepositoriosDoUsuarioPeloNome } from '../../services/requisicoes/repositorios';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function Repositorios({ route, navigation }) {
     const [repo, setRepo] = useState([]);
+    const [nomeRepo, setNomeRepo] = useState('');
     const estaNaTela = useIsFocused();
 
     useEffect(() => {
@@ -16,14 +18,33 @@ export default function Repositorios({ route, navigation }) {
       
         buscarRepositorios(); 
       }, [estaNaTela]);
+
+      async function buscarRepositorioPorNome() {
+        const resultado = await PegarRepositoriosDoUsuarioPeloNome(route.params.id, nomeRepo);
+        setRepo(resultado);
+        setNomeRepo('');
+    }
       
 
     return (
         <View style={estilos.container}>
                 <Text style={estilos.repositoriosTexto}>{repo.length} repositórios criados</Text>
+                <TextInput
+                    placeholder="Busque por um repositório"
+                    autoCapitalize="none"
+                    style={estilos.entrada}
+                    value={nomeRepo}
+                    onChangeText={setNomeRepo}
+                />
+                  <TouchableOpacity 
+                    style={estilos.botao}
+                    onPress={buscarRepositorioPorNome}
+                >
+                    <Text style={estilos.textoBotao}>Buscar repositório</Text>
+                </TouchableOpacity>
                 <TouchableOpacity 
                     style={estilos.botao}
-                    onPress={() => navigation.navigate('CriarRepositorio')}
+                    onPress={() => navigation.navigate('CriarRepositorio', {id: route.params.id})}
                 >
                     <Text style={estilos.textoBotao}>Adicionar novo repositório</Text>
                 </TouchableOpacity>

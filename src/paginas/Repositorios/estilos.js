@@ -7,6 +7,17 @@ const estilos = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    entrada: {
+        borderWidth: 2,
+        borderColor: '#ddd',
+        paddingHorizontal: 20,
+        fontSize: 16,
+        color: '#444',
+        marginTop: 20,
+        borderRadius: 8,
+        height: 44,
+        width: '90%',
+    },
     repositoriosTexto: {
         fontSize: 21,
         fontWeight: '600',
@@ -40,8 +51,7 @@ const estilos = StyleSheet.create({
     },
     botao: {
         backgroundColor: '#8A07DA',
-        marginTop: 20,
-        marginBottom: 30,
+        marginTop: 10,
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
